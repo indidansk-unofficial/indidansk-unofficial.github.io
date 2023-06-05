@@ -9,13 +9,21 @@
 				margin: 30px;
 			}
 			
+			.hover-underline {
+				text-decoration: none;
+			}
+			
+			.hover-underline:hover {
+				text-decoration: underline;
+			}
+			
 			main, #p5_loading {
 				display: none;
 			}
 			
 			#content {
-				max-width: 40rem;
-				line-height: 1.5rem;
+				max-width: 50rem;
+				line-height: 1.25rem;
 				margin-bottom: 4rem;
 			}
 			
@@ -91,6 +99,11 @@
 				cursor: pointer;
 			}
 			
+			#display {
+				display: flex;
+				justify-content: center;
+			}
+			
 			#display canvas {
 				margin-top: 3em;
 				box-shadow: 2px 2px 3px;
@@ -103,36 +116,41 @@
 	
 	<body>
 		<div id="content">
+			<span>Jeg er på: <a class="hover-underline" href="/det-gyldne-snit">computer</a> | <b>telefon</b></span>
+			<br>
+			
 			<h1>Find det gyldne snit</h1>
 			
-			<p>Det gyldne snit er en kompositionsmetode, som ofte er brugt i malerier og fotografier.</p>
-			<p>Det gyldne snit består af fire vinkelrette linjer, som opdeler billedet i 9 kvadrater. 
-			Langs disse linjer og på deres skæringspunkter finder man som regel de elementer, der er specielle og som skal fremhæves.</p>
+			<p>Det gyldne snit er en kompositionsmetode, der ofte kan ses brugt inden for malerkunst og fotografi. Metoden hjælper efter sigende med at placere vigtige objekter eller personer dér på et billede, hvor øjet naturligt vil hvile.</p>
+			<p>Når man analyserer et billede og vil finde ud af, om der benyttes det gyldne snit, skal man tegne fire vinkelrette linjer langs siderne (hver 3/8 inde fra deres respektive sider), sådan at billedet opdeles i 9 kvadrater. 
+			Langs disse linjer og især på deres skæringspunkter ses det ofte, at billedets ophavsmand har placeret de allervigtigste elementer i billedet.</p>
+			Det kan dog være bøvlet at tegne fire præciser streger, især hvis man ikke gider udprint. Derfor har jeg lavet dette online værktøj.
 			<br>
-			<p>For at finde det gyldne snit i dit billede, skal du trække billedfilen ind i feltet forneden eller vælge den ved at klikke i feltet. 
-			Derefter trykker du på "Go!", og når dit billede er færdigt, kan du trykke på "Gem billede" for at downloade det nye billede i fuld kvalitet.</p>
+			<p>For let at finde det gyldne snit i dit billede, skal du først vælge et ved at trykke på feltet forneden. 
+			Derefter skal du trykke på "Go!", og når billedet er færdigt, kan du trykke "Gem billede" for at downloade det nye billede.</p>
 			<p>Du kan nårsomhelst vælge et andet billede og trykke på "Go!" knappen igen.</p>
 			<br>
-			<p>Siden virker nu også på telefon.</p>
+			<p><b>Vær opmærksom på</b>, at det gemte billede på telefon kan være nedskaleret. Det er på grund af begrænsninger ved telefonens browser.</p>
+			<p>For at gemme store billeder i deres oprindelige kvalitet, skal du bruge hjemmesiden på computer.
 		</div>
 		
 		<form id="upload">
 			<div class="empty">
-				<img src="uploadfile.png"/>
+				<img src="files/uploadfile.png"/>
 				<span>Træk din fil hér eller <b>vælg en</b></span>
 			</div>
 			<div class="fail" style="display: none;">
-				<img src="notallowed.png"/>
+				<img src="files/notallowed.png"/>
 				<span><span class="filename">dumfil.exe</span> er ikke et billede eller understøttes ikke<br/>
 				<b>Vælg en anden fil</b>
 				</span>
 			</div>
 			<div class="succeed" style="display: none;">
-				<img src="checkmark.png"/>
+				<img src="files/checkmark.png"/>
 				<span><span class="filename">coolbillede.png</span><br/><b>Vælg en anden fil</b></span>
 			</div>
 			<div class="loading" style="display: none;">
-				<img src="loading.png"/>
+				<img src="files/loading.png"/>
 				<span>Vent et øjeblik...</span>
 			</div>
 
@@ -147,15 +165,15 @@
 		<div id="display"></div>
 		
 		<script>
-			let image;
-			let fileName;
-			let strokeWeight;
-		
 			const T = 40;
 			const T1 = 20;
 			const T2 = 40;
 			const T3 = 70;
 			const T4 = 90;
+			
+			let image;
+			let fileName;
+			let strokeWeight;
 
 			function fLine(p, x1, y1, x2, y2) {
 				p.line(floor(x1), floor(y1), floor(x2), floor(y2));
@@ -211,6 +229,7 @@
 				}
 			}
 			
+			const maxImageSize = 1864000;
 			
 			let instance;
 			
@@ -240,6 +259,12 @@
 				reader.onload = function() {
 					if (reader.result.indexOf("image") == 5) {
 						loadImage(reader.result, function(img) { // Success
+							let imageSize = img.width * img.height;
+							if (imageSize > maxImageSize) {
+								let ratio = sqrt(maxImageSize / imageSize);
+								img.resize(floor(img.width * ratio), floor(img.height * ratio));
+							}
+						
 							$("#upload > div").hide();
 							$("#upload .succeed").show()
 								.find(".filename").text(fileName);
@@ -262,8 +287,8 @@
 			});
 			
 			$("#buttons .go").click(function() {
-				const maxWidth = 1000; //$("#content").width();
-				const maxHeight = 400; //$("body").height() * 0.9;
+				const maxWidth = $("body").width();
+				const maxHeight = $(window).height() - 60;
 				let ratio = maxWidth / image.width;
 				if (image.height * ratio > maxHeight) {
 					ratio = maxHeight / image.height;

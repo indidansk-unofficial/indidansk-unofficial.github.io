@@ -12,8 +12,8 @@ let counter;
 
 
 function preload() {
-  font1 = loadFont("/arialbd.ttf");
-  font2 = loadFont("/arial.ttf");
+  font1 = loadFont("/files/arialbd.ttf");
+  font2 = loadFont("/fiels/arial.ttf");
 }
 
 function setup() {
