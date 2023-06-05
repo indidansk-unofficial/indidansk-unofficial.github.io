@@ -13,7 +13,7 @@ let counter;
 
 function preload() {
   font1 = loadFont("/files/arialbd.ttf");
-  font2 = loadFont("/fiels/arial.ttf");
+  font2 = loadFont("/files/arial.ttf");
 }
 
 function setup() {
