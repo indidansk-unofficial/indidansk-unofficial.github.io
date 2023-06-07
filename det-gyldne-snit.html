@@ -5,7 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<style>
+			html {
+				height: 100%;
+			}
+		
 			body {
+				height: 100%;
 				margin: 0;
 				background: #ccc;
 			}
@@ -15,12 +20,12 @@
 				flex-direction: column;
 				justify-content: flex-start;
 				align-items: center;
-				flex-gap: 0;
+				gap: 0;
 			}
 			
 			#main-container {
 				width: 40rem;
-				height: calc(100vh - 40px);
+				flex-grow: 1;
 				padding: 20px 30px;
 				background: #fff
 			}
@@ -56,6 +61,7 @@
 				border: 3px dashed #aaaaaa;
 				box-sizing: border-box;
 				position: relative;
+				flex-shrink: 0;
 			}
 
 			#upload.success {
@@ -125,14 +131,16 @@
 			
 			<h1>Find det gyldne snit</h1>
 			
-			<p>Det gyldne snit er en kompositionsmetode, der ofte kan ses brugt inden for malerkunst og fotografi. Metoden hjælper efter sigende med at placere vigtige objekter eller personer dér på et billede, hvor øjet naturligt vil hvile.</p>
-			<p>Når man analyserer et billede og vil finde ud af, om der benyttes det gyldne snit, skal man tegne fire vinkelrette linjer langs siderne (hver 3/8 inde fra deres respektive sider), sådan at billedet opdeles i 9 kvadrater. 
-			Langs disse linjer og især på deres skæringspunkter ses det ofte, at billedets ophavsmand har placeret de allervigtigste elementer i billedet.</p>
-			Det kan dog være bøvlet at tegne fire præciser streger, især hvis man ikke gider udprint. Derfor har jeg lavet dette online værktøj.
-			<br>
-			<p>For let at finde det gyldne snit i dit billede, skal du først vælge et ved at trykke på feltet forneden. 
-			Derefter skal du trykke på "Go!", og når billedet er færdigt, kan du trykke "Gem billede" for at downloade det nye billede.</p>
-			<p>Du kan nårsomhelst vælge et andet billede og trykke på "Go!" knappen igen.</p>
+			<p>Det gyldne snit er en kompositionsmetode, som der ofte bliver brugt inden for malerkunst og fotografi. 
+			Den hjælper med at placere vigtige objekter eller personer dér på et billede, hvor øjet naturligt hviler.</p>
+			<p>Når man analyserer et billede og vil finde ud af, om der er benyttet det gyldne snit, skal man tegne fire vinkelrette linjer langs siderne, 
+			sådan at billedet opdeles i 9 kvadrater. Hver linje skal være 3/8 af bredden/højden inde fra dens respektive side.
+			Langs disse linjer og (især) på skæringspunkterne mellem dem har ophavsmanden ofte placeret de centrale elementer i billedet.</p>
+			<p>Det kan være bøvlet at tegne fire præciser streger, især hvis man ikke gider udprint. Derfor har jeg lavet dette online værktøj.</p>
+			<p>For let at finde det gyldne snit i dit billede, skal du først vælge et billede fra din enhed ved at trykke på feltet forneden. 
+			Derefter skal du trykke på 'Go!', og når billedet er færdigt (der spilles en lille animation), 
+			kan du trykke 'Gem billede' for at downloade det nye billede med det gyldne snit overlayet.</p>
+			<p>Du kan nårsomhelst vælge et andet billede og trykke på 'Go!' knappen igen.</p>
 		</div>
 		
 		<form id="upload">
